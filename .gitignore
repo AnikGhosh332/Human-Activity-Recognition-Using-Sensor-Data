@@ -1,0 +1,24 @@
+# Ignore datasets
+/data/
+/PAMAP2_Dataset/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+
+zsl_research copy.ipynb
+zsl_research_combined.ipynb
+zsl_research.ipynb
+zsl_research_combined_V2.ipynb
+zsl_research_notebook_2.ipynb
+zsl_research_modified_2.ipynb
+
+/openleaf visualisations/
+
+/Papers/
