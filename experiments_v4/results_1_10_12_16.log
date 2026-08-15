@@ -1,0 +1,37 @@
+======================================================================
+EXPERIMENT LOG  —  UNSEEN_IDS = [1, 10, 12, 16]
+Run timestamp : 2026-08-15 14:23:42
+VIS_DIR       : /Users/anikghosh/Desktop/test/Zero Shot Learning/visualisations_modified_1_10_12_16
+======================================================================
+
+SEEN classes   : ['sitting', 'standing', 'walking', 'running', 'cycling', 'watching TV', 'car driving', 'descending stairs', 'ironing', 'folding laundry', 'house cleaning', 'playing soccer']
+UNSEEN classes : ['lying', 'computer work', 'ascending stairs', 'vacuum cleaning']
+Train windows  : 4457
+Val windows    : 786
+Test windows   : 387
+
+Modality gap (mean text-sensor cosine):
+  Label-name reference     : ~0.30
+  Contrastive TCN (this)   : 0.7327
+
+Approach              Metric           Value  Label-name ref
+------------------------------------------------------------
+A1 Nearest Proto      Accuracy        0.2636          0.5825
+A1 Nearest Proto      Macro F1        0.3130          0.3400
+A1 Nearest Proto      Bal Acc         0.5577          0.3400
+A2 ISF+Center         Accuracy        0.4548          0.5515
+A2 ISF+Center         Macro F1        0.3910          0.3500
+A2 ISF+Center         Bal Acc         0.6169          0.3500
+A3 Alignment          Accuracy        0.3049          0.4175
+A3 Alignment          Macro F1        0.3179          0.3200
+A3 Alignment          Bal Acc         0.5724          0.3200
+
+Per-class recall:
+  Class                         A1      A2      A3
+  --------------------------------------------
+  lying                      1.000   1.000   1.000
+  computer work              0.103   0.382   0.162
+  ascending stairs           1.000   1.000   1.000
+  vacuum cleaning            0.128   0.085   0.128
+
+======================================================================

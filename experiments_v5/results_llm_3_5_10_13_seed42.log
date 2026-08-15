@@ -1,0 +1,79 @@
+==============================================================================
+EXPERIMENT LOG  —  LLM-generated + filtered
+Run timestamp  : 2026-08-15 20:18:44
+Protocol hash  : 13da674d64
+Store key      : llm|3_5_10_13|seed42|13da674d64
+==============================================================================
+
+PROTOCOL
+  unseen              : [3, 5, 10, 13]
+  val_unseen          : [7, 17, 24]
+  seed                : 42
+  window_train        : 1000
+  window_test         : 1000
+  stride_train        : 250
+  stride_test         : 500
+  purity_thresh       : 0.85
+  val_frac            : 0.15
+  seen_only_softmax   : True
+  test_augmentation   : disabled
+  epochs              : 40
+  temperature         : 0.07
+  lr                  : 0.001
+
+SPLIT
+  SEEN       (11) : ['lying', 'sitting', 'walking', 'cycling', 'watching TV', 'car driving', 'ascending stairs', 'vacuum cleaning', 'folding laundry', 'house cleaning', 'playing soccer']
+  VAL-UNSEEN ( 3) : ['Nordic walking', 'ironing', 'rope jumping']
+  UNSEEN     ( 4) : ['standing', 'running', 'computer work', 'descending stairs']
+  Excluded (zero training windows): ['playing soccer']
+  -> usable seen classes: 10, not 11
+  Windows    : train 4049, val 714, val-unseen 1548, test 369
+  Test support: {'standing': 49, 'running': 31, 'computer work': 272, 'descending stairs': 17}
+
+PROTOTYPE SPACE
+  Dimensionality              : 768
+  Separability, all 18        : 0.2001  (mean off-diagonal cosine)
+  Separability, unseen subset : 0.1431
+
+MODALITY GAP (mean prototype-centroid cosine over seen classes)
+  This run : 0.7409
+  Label names : unavailable — 'labels' has never been run — set PROTOTYPE_SET = 'labels' and run all.
+
+UNSEEN-SIDE ALIGNMENT (does the seen-class alignment transfer?)
+  class                      own cos  tightness  support
+  standing                   +0.1221      0.953       49
+  running                    +0.0198      0.952       31
+  computer work              -0.0013      0.810      272
+  descending stairs          +0.1202      0.950       17
+
+ORACLE DIAGNOSTICS (use test labels — bounds, never results)
+  Cluster-matching accuracy : 0.5881
+  Cluster-matching macro F1 : 0.6112
+  Linear-probe macro F1     : 0.9970
+  Majority-class accuracy   : 0.7371
+  Chance accuracy           : 0.2500
+  Cluster purity vs k       : {4: 0.9512, 6: 0.9512, 8: 0.9946, 12: 0.9946}
+
+RESULTS
+  Approach                 MacroF1    BalAcc       Acc  Mode        
+  ------------------------------------------------------------------
+  A1 Nearest prototype      0.4175    0.6023    0.5176  inductive   
+  A2 ISF + centering        0.4401    0.4101    0.6911  TRANSDUCTIVE
+  A3 Alignment + ISF        0.4110    0.4114    0.4824  TRANSDUCTIVE
+
+  A2 beta = 0.0682, selected on val-unseen classes, grid [0.0072, 2.8863] (25 pts)
+  A3 beta = 0.3485, selected on val-unseen classes, grid [0.0174, 6.9696] (25 pts)
+  A3 alignment: K=9, lambda=0.001, fitted on 10 seen pairs
+
+PER-CLASS RECALL
+  Class                         A1      A2      A3  support
+  --------------------------------------------------------
+  standing                   0.939   0.857   1.000       49
+  running                    0.000   0.000   0.194       31
+  computer work              0.471   0.783   0.452      272
+  descending stairs          1.000   0.000   0.000       17
+
+COMPARABLE RUNS IN STORE: only this one. Run the other prototype
+configurations under the same protocol to populate the comparison.
+
+==============================================================================

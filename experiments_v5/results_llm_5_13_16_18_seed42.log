@@ -1,0 +1,79 @@
+==============================================================================
+EXPERIMENT LOG  —  LLM-generated + filtered
+Run timestamp  : 2026-08-15 18:10:13
+Protocol hash  : 763f8bd430
+Store key      : llm|5_13_16_18|seed42|763f8bd430
+==============================================================================
+
+PROTOCOL
+  unseen              : [5, 13, 16, 18]
+  val_unseen          : [7, 17, 24]
+  seed                : 42
+  window_train        : 1000
+  window_test         : 1000
+  stride_train        : 250
+  stride_test         : 500
+  purity_thresh       : 0.85
+  val_frac            : 0.15
+  seen_only_softmax   : True
+  test_augmentation   : disabled
+  epochs              : 40
+  temperature         : 0.07
+  lr                  : 0.001
+
+SPLIT
+  SEEN       (11) : ['lying', 'sitting', 'standing', 'walking', 'cycling', 'watching TV', 'computer work', 'car driving', 'ascending stairs', 'house cleaning', 'playing soccer']
+  VAL-UNSEEN ( 3) : ['Nordic walking', 'ironing', 'rope jumping']
+  UNSEEN     ( 4) : ['running', 'descending stairs', 'vacuum cleaning', 'folding laundry']
+  Excluded (zero training windows): ['playing soccer']
+  -> usable seen classes: 10, not 11
+  Windows    : train 4518, val 797, val-unseen 1548, test 194
+  Test support: {'running': 31, 'descending stairs': 17, 'vacuum cleaning': 47, 'folding laundry': 99}
+
+PROTOTYPE SPACE
+  Dimensionality              : 768
+  Separability, all 18        : 0.2001  (mean off-diagonal cosine)
+  Separability, unseen subset : 0.1808
+
+MODALITY GAP (mean prototype-centroid cosine over seen classes)
+  This run : 0.7663
+  Label names : unavailable — 'labels' has never been run — set PROTOTYPE_SET = 'labels' and run all.
+
+UNSEEN-SIDE ALIGNMENT (does the seen-class alignment transfer?)
+  class                      own cos  tightness  support
+  running                    +0.1499      0.948       31
+  descending stairs          +0.1521      0.946       17
+  vacuum cleaning            +0.0661      0.599       47
+  folding laundry            +0.0520      0.764       99
+
+ORACLE DIAGNOSTICS (use test labels — bounds, never results)
+  Cluster-matching accuracy : 0.5464
+  Cluster-matching macro F1 : 0.4842
+  Linear-probe macro F1     : 0.9307
+  Majority-class accuracy   : 0.5103
+  Chance accuracy           : 0.2500
+  Cluster purity vs k       : {4: 0.7835, 6: 0.9433, 8: 0.9278, 12: 0.9278}
+
+RESULTS
+  Approach                 MacroF1    BalAcc       Acc  Mode        
+  ------------------------------------------------------------------
+  A1 Nearest prototype      0.3373    0.4150    0.3299  inductive   
+  A2 ISF + centering        0.3816    0.4377    0.4588  TRANSDUCTIVE
+  A3 Alignment + ISF        0.3274    0.3373    0.4278  TRANSDUCTIVE
+
+  A2 beta = 0.8908, selected on val-unseen classes, grid [0.0047, 1.8838] (25 pts)
+  A3 beta = 0.7778, selected on val-unseen classes, grid [0.0184, 7.3564] (25 pts)
+  A3 alignment: K=9, lambda=0.001, fitted on 10 seen pairs
+
+PER-CLASS RECALL
+  Class                         A1      A2      A3  support
+  --------------------------------------------------------
+  running                    0.484   0.935   0.548       31
+  descending stairs          0.647   0.118   0.000       17
+  vacuum cleaning            0.277   0.213   0.255       47
+  folding laundry            0.253   0.485   0.545       99
+
+COMPARABLE RUNS IN STORE: only this one. Run the other prototype
+configurations under the same protocol to populate the comparison.
+
+==============================================================================

@@ -1,0 +1,77 @@
+==============================================================================
+EXPERIMENT LOG  —  LLM-generated + filtered
+Run timestamp  : 2026-08-15 18:44:00
+Protocol hash  : f76b1b9341
+Store key      : llm|2_12_17_20|seed42|f76b1b9341
+==============================================================================
+
+PROTOCOL
+  unseen              : [2, 12, 17, 20]
+  val_unseen          : [7, 19, 24]
+  seed                : 42
+  window_train        : 1000
+  window_test         : 1000
+  stride_train        : 250
+  stride_test         : 500
+  purity_thresh       : 0.85
+  val_frac            : 0.15
+  seen_only_softmax   : True
+  test_augmentation   : disabled
+  epochs              : 40
+  temperature         : 0.07
+  lr                  : 0.001
+
+SPLIT
+  SEEN       (11) : ['lying', 'standing', 'walking', 'running', 'cycling', 'watching TV', 'computer work', 'car driving', 'descending stairs', 'vacuum cleaning', 'folding laundry']
+  VAL-UNSEEN ( 3) : ['Nordic walking', 'house cleaning', 'rope jumping']
+  UNSEEN     ( 4) : ['sitting', 'ascending stairs', 'ironing', 'playing soccer']
+  Windows    : train 4503, val 794, val-unseen 1180, test 220
+  Test support: {'sitting': 44, 'ascending stairs': 21, 'ironing': 64, 'playing soccer': 91}
+
+PROTOTYPE SPACE
+  Dimensionality              : 768
+  Separability, all 18        : 0.2001  (mean off-diagonal cosine)
+  Separability, unseen subset : 0.1555
+
+MODALITY GAP (mean prototype-centroid cosine over seen classes)
+  This run : 0.7832
+  Label names : unavailable — 'labels' has never been run — set PROTOTYPE_SET = 'labels' and run all.
+
+UNSEEN-SIDE ALIGNMENT (does the seen-class alignment transfer?)
+  class                      own cos  tightness  support
+  sitting                    +0.0335      0.949       44
+  ascending stairs           +0.1380      0.943       21
+  ironing                    -0.0734      0.968       64
+  playing soccer             +0.2239      0.729       91
+
+ORACLE DIAGNOSTICS (use test labels — bounds, never results)
+  Cluster-matching accuracy : 0.7045
+  Cluster-matching macro F1 : 0.6589
+  Linear-probe macro F1     : 0.9268
+  Majority-class accuracy   : 0.4136
+  Chance accuracy           : 0.2500
+  Cluster purity vs k       : {4: 0.7864, 6: 0.8273, 8: 0.9045, 12: 0.9591}
+
+RESULTS
+  Approach                 MacroF1    BalAcc       Acc  Mode        
+  ------------------------------------------------------------------
+  A1 Nearest prototype      0.2325    0.3022    0.3636  inductive   
+  A2 ISF + centering        0.5646    0.5204    0.6227  TRANSDUCTIVE
+  A3 Alignment + ISF        0.5016    0.4958    0.5500  TRANSDUCTIVE
+
+  A2 beta = 0.3050, selected on val-unseen classes, grid [0.0093, 3.7027] (25 pts)
+  A3 beta = 0.1999, selected on val-unseen classes, grid [0.0128, 5.1329] (25 pts)
+  A3 alignment: K=9, lambda=0.001, fitted on 11 seen pairs
+
+PER-CLASS RECALL
+  Class                         A1      A2      A3  support
+  --------------------------------------------------------
+  sitting                    0.000   0.455   0.455       44
+  ascending stairs           0.429   0.190   0.333       21
+  ironing                    0.000   0.656   0.547       64
+  playing soccer             0.780   0.780   0.648       91
+
+COMPARABLE RUNS IN STORE: only this one. Run the other prototype
+configurations under the same protocol to populate the comparison.
+
+==============================================================================
